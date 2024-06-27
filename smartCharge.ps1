@@ -1,8 +1,9 @@
 $procPath = "C:\Program Files\MI\XiaomiPCManager\Launch.exe"
 $procArg = "--AutoRun=1"
-$regPath = "Registry::HKEY_USERS\<user_folder>\Software\MI\SvrCModule\PerformanceMode\POWER"
+$regPath = "Registry::HKEY_CURRENT_USER\Software\MI\SvrCModule\PerformanceMode\POWER"
 $regKey = "ChargingProtect"
-$file = "<script_path>\.plugged"
+$scriptPath = "" # the directory containing scripts
+$file = "$scriptPath\.plugged"
 $interval = 300
 
 while ($true) {
@@ -18,13 +19,13 @@ while ($true) {
 		$processes[$in-1].Kill()
 		$processes[$in-1].WaitForExit()
 
-		# change registry key 'ChargingProtect' to '0'
+		# change registry key to '0'
 		Set-ItemProperty -Path $regPath -Name $regKey -Value 0
 
 		# start process
 		Start-Process  $procPath -ArgumentList $procArg
 
-		# wait 10 sec
+		# sleep 10 sec
 		Start-Sleep -s 10
 
 	    # get the process details
@@ -35,7 +36,7 @@ while ($true) {
 		$processes[$in-1].Kill()
 		$processes[$in-1].WaitForExit()
 
-		# change registry key 'ChargingProtect' to '1'
+		# change registry key to '1'
 		Set-ItemProperty -Path $regPath -Name $regKey -Value 1
 
 		# start process
