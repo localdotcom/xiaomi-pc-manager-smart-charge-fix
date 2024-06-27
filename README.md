@@ -9,4 +9,4 @@ The powershell script to fix Xiaomi PC Manager smart charge issue described
 ## Testing
 - Plug the power adapter
 - Restart the laptop
-- Check whether file `.plugged` is created under your `<script_path>` 
+- Check whether script directory contains a file `.plugged`
