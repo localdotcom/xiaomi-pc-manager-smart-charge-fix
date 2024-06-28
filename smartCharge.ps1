@@ -2,7 +2,7 @@ $procPath = "C:\Program Files\MI\XiaomiPCManager\Launch.exe"
 $procArg = "--AutoRun=1"
 $regPath = "Registry::HKEY_CURRENT_USER\Software\MI\SvrCModule\PerformanceMode\POWER"
 $regKey = "ChargingProtect"
-$scriptPath = "" # the directory containing scripts
+$scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
 $file = "$scriptPath\.plugged"
 $interval = 300
 
@@ -44,14 +44,11 @@ while ($true) {
 
 		# create a file
 		New-Item $file | Out-Null
-
-		# echo "Smart charge activated"
+		Write-Output "Smart charge activated" >> $file
 	}
 	elseif ($plugged -match "False" -and (Test-path $file)) {
 		# remove file
 		Remove-Item $file
-		
-		# echo "Smart charge deactivated"
 	}
 
 	Start-Sleep -s $interval # run script every 5 minutes (default value)
